@@ -1,0 +1,68 @@
+---
+title: "Descargar Ticket (80mm)"
+description: "Genera y devuelve el PDF en formato ticket (80mm)."
+api: "GET https://www.sharkfac.com/api/v1/facturas/{id}/ticket"
+---
+
+Descarga el archivo PDF optimizado para impresoras térmicas de rollo de 80mm.
+
+Ideal para puntos de venta (POS) e impresoras térmicas estándar.
+
+---
+
+## Path Parameters
+
+<ParamField path="id" type="integer" required>
+  ID interno de la factura.
+</ParamField>
+
+---
+
+## Headers
+
+<ParamField header="x-sharkfac-key" type="string" required>
+  Tu API Key secreta.
+</ParamField>
+
+---
+
+## Ejemplo de petición
+
+<RequestExample>
+
+```bash
+curl -X GET "https://www.sharkfac.com/api/v1/facturas/112/ticket" \
+  -H "x-sharkfac-key: TU_API_KEY_AQUI" \
+  --output ticket-112.pdf
+```
+
+```javascript
+fetch("https://www.sharkfac.com/api/v1/facturas/112/ticket", {
+  method: "GET",
+  headers: {
+    "x-sharkfac-key": "TU_API_KEY_AQUI"
+  }
+})
+  .then(res => res.blob())
+  .then(blob => {
+    const url = window.URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "ticket-112.pdf";
+
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+  });
+```
+
+</RequestExample>
+
+---
+
+## Respuesta
+
+```text
+Archivo binario (application/pdf) optimizado para impresora térmica.
+```

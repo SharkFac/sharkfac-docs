@@ -1,0 +1,68 @@
+---
+title: "Actividades Económicas"
+description: "Obtiene la lista de actividades económicas (CAEB) asignadas a tu NIT por el SIAT."
+api: "GET https://www.sharkfac.com/api/v1/productos/opciones/actividades"
+---
+
+Para emitir una factura, necesitas indicar a qué actividad económica pertenece la venta.
+
+Este endpoint devuelve exactamente las actividades autorizadas y sincronizadas para tu NIT.
+
+---
+
+## Headers
+
+<ParamField header="x-sharkfac-key" type="string" required>
+  Tu API Key secreta. Se utiliza para identificar tu NIT.
+</ParamField>
+
+---
+
+## Ejemplo de petición
+
+<RequestExample>
+
+```bash
+curl -X GET "https://www.sharkfac.com/api/v1/productos/opciones/actividades" \
+  -H "x-sharkfac-key: TU_API_KEY_AQUI"
+```
+
+```javascript
+fetch("https://www.sharkfac.com/api/v1/productos/opciones/actividades", {
+  method: "GET",
+  headers: {
+    "x-sharkfac-key": "TU_API_KEY_AQUI"
+  }
+})
+  .then(res => res.json())
+  .then(console.log);
+```
+
+</RequestExample>
+
+---
+
+## Respuesta
+
+```json
+[
+  {
+    "id": 1,
+    "nitCliente": 7079.....,
+    "tipoCatalogo": "Actividades",
+    "codigoClasificador": "7490....",
+    "descripcion": "Consultor de línea - contratados por el Estado u Organismos Internacionales",
+    "codigoActividad": null,
+    "fechaSincronizacion": "2026-05-15T18:10:39.824061"
+  },
+  {
+    "id": 3,
+    "nitCliente": 7079.....,
+    "tipoCatalogo": "Actividades",
+    "codigoClasificador": "6201000",
+    "descripcion": "Actividades de programación informática",
+    "codigoActividad": null,
+    "fechaSincronizacion": "2026-05-15T18:10:39.828288"
+  }
+]
+```

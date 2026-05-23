@@ -1,0 +1,91 @@
+---
+title: "Anular Factura"
+description: "Invalida una factura previamente emitida y validada por el SIAT."
+api: "POST https://www.sharkfac.com/api/v1/facturas/{id}/anular"
+---
+
+Anula una factura electrónica registrada previamente en el sistema del Servicio de Impuestos Nacionales (SIAT).
+
+<Warning>
+  Por normativa del SIAT, solo puedes anular facturas emitidas hasta el día 9 del mes siguiente a su emisión.
+</Warning>
+
+---
+
+## Path Parameters
+
+<ParamField path="id" type="integer" required>
+  ID interno de la factura que deseas anular.
+
+  Debes utilizar el valor retornado en el campo `id` al momento de emitir la factura.
+
+  No debes usar el número correlativo de factura (`numeroFactura`).
+</ParamField>
+
+---
+
+## Headers
+
+<ParamField header="x-sharkfac-key" type="string" required>
+  Tu API Key secreta.
+</ParamField>
+
+<ParamField header="Content-Type" type="string" required>
+  Debe ser `application/json`.
+</ParamField>
+
+---
+
+## Body Parameters
+
+<ParamField body="codigoMotivo" type="integer" required>
+  Código del motivo de anulación según el catálogo oficial del SIAT.
+
+  Motivos comunes:
+  
+  - `1` = Factura mal emitida
+  - `2` = Datos de emisión incorrectos
+  - `3` = Factura o artículo devuelto
+</ParamField>
+
+---
+
+## Ejemplo de petición
+
+<RequestExample>
+
+```bash
+curl -X POST "https://www.sharkfac.com/api/v1/facturas/112/anular" \
+  -H "Content-Type: application/json" \
+  -H "x-sharkfac-key: TU_API_KEY_AQUI" \
+  -d '{
+    "codigoMotivo": 1
+  }'
+```
+
+```javascript
+const payload = {
+  codigoMotivo: 1
+};
+
+fetch("https://www.sharkfac.com/api/v1/facturas/112/anular", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    "x-sharkfac-key": "TU_API_KEY_AQUI"
+  },
+  body: JSON.stringify(payload)
+})
+  .then(res => res.text())
+  .then(console.log);
+```
+
+</RequestExample>
+
+---
+
+## Respuesta
+
+```text
+Factura anulada correctamente.
+```

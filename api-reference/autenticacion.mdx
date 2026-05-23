@@ -1,0 +1,50 @@
+---
+title: "Autenticación"
+description: "Aprende cómo proteger y autenticar tus peticiones hacia la API de SharkFac."
+---
+
+La API de SharkFac Lite utiliza un sistema de **API Keys** (SharkKeys) para identificar a qué empresa pertenece cada transacción.
+
+Debes incluir tu clave secreta en el encabezado (**Header**) de **todas** las peticiones que hagas a nuestros servidores.
+
+---
+
+## ¿Cómo enviar tu API Key?
+
+El método de autenticación es a través de un custom header llamado:
+
+```http
+x-sharkfac-key
+```
+
+Debes enviarlo en cada petición HTTP.
+
+### Ejemplo
+
+```bash
+curl -X GET "https://www.sharkfac.com/api/v1/productos/opciones/actividades" \
+  -H "x-sharkfac-key: sk_test_12345abcdef"
+```
+
+---
+
+## Mantén tu llave a salvo
+
+Tu API Key es como la contraseña de tu cuenta bancaria.
+
+Si alguien la obtiene, podría emitir facturas a tu nombre.
+
+Las peticiones a SharkFac siempre deben hacerse desde tu servidor (**Backend**).
+
+---
+
+## Respuestas de autenticación
+
+Si no envías el header o la llave es incorrecta, el servidor responderá con un error:
+
+```json
+{
+  "error": "No autorizado",
+  "mensaje": "La API Key proporcionada (x-sharkfac-key) es inválida o no existe."
+}
+```

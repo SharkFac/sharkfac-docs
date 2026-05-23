@@ -1,0 +1,71 @@
+---
+title: "Unidades de Medida"
+description: "Obtiene el catálogo oficial de unidades de medida del SIAT."
+api: "GET https://www.sharkfac.com/api/v1/productos/opciones/medidas"
+---
+
+Para facturar un ítem, el SIAT requiere indicar la unidad de medida correspondiente.
+
+Por ejemplo:
+
+- `58` = Servicios
+- `57` = Pieza
+
+---
+
+## Headers
+
+<ParamField header="x-sharkfac-key" type="string" required>
+  Tu API Key secreta.
+</ParamField>
+
+---
+
+## Ejemplo de petición
+
+<RequestExample>
+
+```bash
+curl -X GET "https://www.sharkfac.com/api/v1/productos/opciones/medidas" \
+  -H "x-sharkfac-key: TU_API_KEY_AQUI"
+```
+
+```javascript
+fetch("https://www.sharkfac.com/api/v1/productos/opciones/medidas", {
+  method: "GET",
+  headers: {
+    "x-sharkfac-key": "TU_API_KEY_AQUI"
+  }
+})
+  .then(res => res.json())
+  .then(console.log);
+```
+
+</RequestExample>
+
+---
+
+## Respuesta
+
+```json
+[
+  {
+    "id": 1001,
+    "nitCliente": 7079....,
+    "tipoCatalogo": "UnidadMedida",
+    "codigoClasificador": "38",
+    "descripcion": "MILLARES",
+    "codigoActividad": null,
+    "fechaSincronizacion": "2026-05-15T18:10:45.031642"
+  },
+  {
+    "id": 1005,
+    "nitCliente": 7079.....,
+    "tipoCatalogo": "UnidadMedida",
+    "codigoClasificador": "58",
+    "descripcion": "SERVICIOS",
+    "codigoActividad": null,
+    "fechaSincronizacion": "2026-05-15T18:10:45.032761"
+  }
+]
+```

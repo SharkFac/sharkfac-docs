@@ -1,0 +1,60 @@
+---
+title: "Introducción"
+description: "Bienvenido a la documentación oficial de SharkFac Lite."
+---
+
+<img
+  className="block dark:hidden"
+  src="/logo/light.png"
+  alt="SharkFac Hero Light"
+/>
+<img
+  className="hidden dark:block"
+  src="/logo/dark.png"
+  alt="SharkFac Hero Dark"
+/>
+
+Bienvenido a **SharkFac Lite**, la plataforma de facturación electrónica SIAT más rápida y moderna de Bolivia. Nuestro objetivo es que dejes de pelear con los complicados manuales de Impuestos Nacionales y empieces a facturar en minutos.
+
+Ya sea que tengas un pequeño negocio o un ERP gigante, nuestra API REST está diseñada para ser integrada fácilmente en cualquier lenguaje de programación.
+
+## ¿Qué puedes hacer con SharkFac?
+
+<CardGroup cols={2}>
+  <Card
+    title="Emitir Facturas"
+    icon="file-invoice-dollar"
+    href="/api-reference/emitir-factura"
+  >
+    Envía facturas al SIAT, firmadas digitalmente y listas en milisegundos.
+  </Card>
+  <Card
+    title="Anular Facturas"
+    icon="ban"
+    href="/api-reference/anular-factura"
+  >
+    Revierte transacciones fácilmente dentro de los plazos establecidos por ley.
+  </Card>
+  <Card
+    title="Envío Automático (PDF/XML)"
+    icon="envelope-open-text"
+  >
+    Deja que nuestro sistema envíe los correos a tus clientes en segundo plano.
+  </Card>
+  <Card
+    title="Control de Inventario"
+    icon="boxes-stacked"
+  >
+    Si usas nuestro POS visual, descontamos tu stock automáticamente con cada venta.
+  </Card>
+</CardGroup>
+
+## Entornos de Trabajo
+
+Actualmente contamos con dos entornos para que pruebes tu integración de forma segura:
+
+
+<Warning>
+  **Producción:** `http://www.sharkfac.com/api/v1` <br/>
+  Úsalo únicamente cuando estés listo para emitir facturas reales a tus clientes.
+</Warning>

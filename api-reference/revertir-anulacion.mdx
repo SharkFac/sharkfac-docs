@@ -1,0 +1,57 @@
+---
+title: "Revertir Anulación"
+description: "Revierte la anulación de una factura en el SIAT."
+api: "POST https://www.sharkfac.com/api/v1/facturas/{id}/revertir-anulacion"
+---
+
+Revierte una solicitud de anulación previa, devolviendo la validez legal a la factura.
+
+Solo es posible realizar esta operación dentro de los plazos permitidos por el SIAT.
+
+---
+
+## Path Parameters
+
+<ParamField path="id" type="integer" required>
+  ID interno de la factura cuya anulación deseas revertir.
+</ParamField>
+
+---
+
+## Headers
+
+<ParamField header="x-sharkfac-key" type="string" required>
+  Tu API Key secreta.
+</ParamField>
+
+---
+
+## Ejemplo de petición
+
+<RequestExample>
+
+```bash
+curl -X POST "https://www.sharkfac.com/api/v1/facturas/112/revertir-anulacion" \
+  -H "x-sharkfac-key: TU_API_KEY_AQUI"
+```
+
+```javascript
+fetch("https://www.sharkfac.com/api/v1/facturas/112/revertir-anulacion", {
+  method: "POST",
+  headers: {
+    "x-sharkfac-key": "TU_API_KEY_AQUI"
+  }
+})
+  .then(res => res.text())
+  .then(console.log);
+```
+
+</RequestExample>
+
+---
+
+## Respuesta
+
+```text
+Anulación revertida exitosamente. La factura vuelve a ser VÁLIDA.
+```

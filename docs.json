@@ -1,0 +1,58 @@
+{
+  "$schema": "https://mintlify.com/schema.json",
+  "name": "SharkFac Lite",
+  "theme": "mint",
+  "logo": {
+    "dark": "/logo/dark.png",
+    "light": "/logo/light.png"
+  },
+  "favicon": "/favicon.png",
+  "colors": {
+    "primary": "#64ffda",
+    "light": "#4cd6b3",
+    "dark": "#0a192f"
+  },
+  "topbarLinks": [
+    {
+      "name": "Soporte",
+      "url": "mailto:soporte@tudominio.com"
+    }
+  ],
+  "topbarCtaButton": {
+    "name": "Ir al Sistema",
+    "url": "http://localhost:5173"
+  },
+    "navigation": {
+  "tabs": [
+    {
+      "tab": "API Reference",
+      "groups": [
+        {
+          "group": "Comenzando",
+          "pages": [
+            "api-reference/introduccion",
+            "api-reference/autenticacion"
+          ]
+        },
+        {
+          "group": "Catálogos SIAT",
+          "pages": [
+            "api-reference/catalogos/actividades",
+            "api-reference/catalogos/productos-sin",
+            "api-reference/catalogos/medidas"
+          ]
+        },
+        {
+          "group": "Facturación",
+          "pages": [
+            "api-reference/emitir-factura",
+            "api-reference/anular-factura",
+            "api-reference/revertir-anulacion",
+            "api-reference/descargar-ticket"
+          ]
+        }
+      ]
+    }
+  ]
+}
+}

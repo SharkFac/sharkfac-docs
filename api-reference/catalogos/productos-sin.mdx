@@ -1,0 +1,69 @@
+---
+title: "Productos SIN"
+description: "Obtiene los productos homologados por el SIAT filtrados por actividad."
+api: "GET https://www.sharkfac.com/api/v1/productos/opciones/sin"
+---
+
+Dependiendo de tu actividad económica, el SIAT te permite facturar ciertos códigos de productos.
+
+Este endpoint devuelve únicamente los productos y servicios autorizados para la actividad económica indicada.
+
+---
+
+## Headers
+
+<ParamField header="x-sharkfac-key" type="string" required>
+  Tu API Key secreta.
+</ParamField>
+
+---
+
+## Query Parameters
+
+<ParamField query="actividad" type="string" required>
+  El `codigoClasificador` de la actividad consultada previamente.
+  
+  Ejemplo: `7490010`
+</ParamField>
+
+---
+
+## Ejemplo de petición
+
+<RequestExample>
+
+```bash
+curl -X GET "https://www.sharkfac.com/api/v1/productos/opciones/sin?actividad=7490010" \
+  -H "x-sharkfac-key: TU_API_KEY_AQUI"
+```
+
+```javascript
+fetch("https://www.sharkfac.com/api/v1/productos/opciones/sin?actividad=7490010", {
+  method: "GET",
+  headers: {
+    "x-sharkfac-key": "TU_API_KEY_AQUI"
+  }
+})
+  .then(res => res.json())
+  .then(console.log);
+```
+
+</RequestExample>
+
+---
+
+## Respuesta
+
+```json
+[
+  {
+    "id": 231,
+    "nitCliente": 7079818019,
+    "tipoCatalogo": "ProductosServicios",
+    "codigoClasificador": "1004116",
+    "descripcion": "Servicios de Consultoría",
+    "codigoActividad": "7490010",
+    "fechaSincronizacion": "2026-05-15T18:10:41.340961"
+  }
+]
+```

@@ -1,0 +1,256 @@
+---
+title: "Emitir Factura"
+description: "Crea y emite una factura electrónica validada por el SIAT."
+api: "POST https://www.sharkfac.com/api/v1/facturas/emitir"
+---
+
+Crea una nueva factura electrónica, la firma digitalmente, la envía al SIAT para validación, genera el PDF/XML y opcionalmente la envía por correo al cliente.
+
+---
+
+## Headers
+
+<ParamField header="x-sharkfac-key" type="string" required>
+  Tu API Key secreta para autenticar la petición.
+</ParamField>
+
+<ParamField header="Content-Type" type="string" required>
+  Debe ser `application/json`.
+</ParamField>
+
+---
+
+## Body Parameters (Cabecera)
+
+<ParamField body="codigoSucursal" type="integer" required>
+  Código SIAT de la sucursal.
+  
+  Ejemplo: `0` para Casa Matriz.
+</ParamField>
+
+<ParamField body="codigoPuntoVenta" type="integer" required>
+  Código SIAT del Punto de Venta.
+  
+  Ejemplo: `0`.
+</ParamField>
+
+<ParamField body="codigoDocumentoIdentidad" type="integer" required>
+  Tipo de documento.
+
+  Valores:
+  
+  - `1` = CI
+  - `2` = CEX
+  - `3` = Pasaporte
+  - `4` = Otro
+  - `5` = NIT
+</ParamField>
+
+<ParamField body="numeroDocumento" type="string" required>
+  Documento del cliente.
+
+  El sistema limpiará automáticamente guiones y espacios según el tipo elegido.
+</ParamField>
+
+<ParamField body="complemento" type="string">
+  Complemento del CI.
+  
+  Ejemplo: `"1B"`.
+
+  También puede enviarlo junto con el CI dentro de `numeroDocumento`.
+  
+  Ejemplo: `"1234567-1B"`
+</ParamField>
+
+<ParamField body="nombreRazonSocial" type="string" required>
+  Nombre o Razón Social del cliente.
+</ParamField>
+
+<ParamField body="email" type="string">
+  Email del cliente para envío automático de la factura.
+</ParamField>
+
+<ParamField body="codigoMetodoPago" type="integer" required>
+  Método de pago.
+
+  Ejemplos:
+  
+  - `1` = Efectivo
+  - `2` = Tarjeta
+  - `10` = Efectivo y Tarjeta
+</ParamField>
+
+<ParamField body="numeroTarjeta" type="string">
+  Requerido si el método de pago incluye tarjeta (`2`, `10`, etc).
+
+  Debe enviar al menos 8 dígitos (4 primeros y 4 últimos).
+
+  El sistema enmascarará automáticamente el centro del número.
+  
+  Ejemplo:
+  
+  `44445555` → `4444000000005555`
+</ParamField>
+
+<ParamField body="montoTotal" type="number" required>
+  Monto total de la factura.
+</ParamField>
+
+---
+
+## Body Parameters (Detalles)
+
+Para uso de API externa, debe enviar obligatoriamente los códigos extraídos de los catálogos del SIAT en cada detalle.
+
+<ParamField body="detalles[].codigoProductoPropio" type="string" required>
+  Código o SKU interno de su sistema.
+</ParamField>
+
+<ParamField body="detalles[].descripcion" type="string" required>
+  Nombre del producto o servicio.
+</ParamField>
+
+<ParamField body="detalles[].cantidad" type="number" required>
+  Cantidad vendida.
+</ParamField>
+
+<ParamField body="detalles[].precioUnitario" type="number" required>
+  Precio por unidad.
+</ParamField>
+
+<ParamField body="detalles[].montoDescuento" type="number">
+  Descuento por ítem.
+
+  Si no existe descuento, envíe `0.00`.
+</ParamField>
+
+<ParamField body="detalles[].codigoActividad" type="string" required>
+  Código de actividad obtenido del catálogo.
+
+  Ejemplo: `"6201000"`
+</ParamField>
+
+<ParamField body="detalles[].codigoProductoSin" type="string" required>
+  Código de producto homologado por el SIN.
+
+  Ejemplo: `"1003914"`
+</ParamField>
+
+<ParamField body="detalles[].unidadMedida" type="integer" required>
+  Código de unidad de medida.
+
+  Ejemplo: `58` = Servicios
+</ParamField>
+
+---
+
+## Ejemplo de petición
+
+<RequestExample>
+
+```bash
+curl -X POST "https://www.sharkfac.com/api/v1/facturas/emitir" \
+  -H "Content-Type: application/json" \
+  -H "x-sharkfac-key: TU_API_KEY_AQUI" \
+  -d '{
+    "codigoSucursal": 0,
+    "codigoPuntoVenta": 0,
+    "codigoDocumentoIdentidad": 5,
+    "numeroDocumento": "99002",
+    "nombreRazonSocial": "CLIENTE NUEVO",
+    "codigoCliente": "99002",
+    "codigoMetodoPago": 2,
+    "numeroTarjeta": "44445555",
+    "montoTotal": 350.00,
+    "email": "cliente@example.com",
+    "gestionarInventario": false,
+    "detalles": [
+      {
+        "codigoProductoPropio": "PROD-001",
+        "descripcion": "Suscripción Anual",
+        "cantidad": 1,
+        "precioUnitario": 350.00,
+        "montoDescuento": 0.00,
+        "codigoActividad": "6201000",
+        "codigoProductoSin": "1003914",
+        "unidadMedida": 58
+      }
+    ]
+  }'
+```
+
+```javascript
+const payload = {
+  codigoSucursal: 0,
+  codigoPuntoVenta: 0,
+  codigoDocumentoIdentidad: 5,
+  numeroDocumento: "99002",
+  nombreRazonSocial: "CLIENTE NUEVO",
+  codigoCliente: "99002",
+  codigoMetodoPago: 2,
+  numeroTarjeta: "44445555",
+  montoTotal: 350.00,
+  email: "cliente@example.com",
+  gestionarInventario: false,
+  detalles: [
+    {
+      codigoProductoPropio: "PROD-001",
+      descripcion: "Suscripción Anual",
+      cantidad: 1,
+      precioUnitario: 350.00,
+      montoDescuento: 0.00,
+      codigoActividad: "6201000",
+      codigoProductoSin: "1003914",
+      unidadMedida: 58
+    }
+  ]
+};
+
+fetch("https://www.sharkfac.com/api/v1/facturas/emitir", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    "x-sharkfac-key": "TU_API_KEY_AQUI"
+  },
+  body: JSON.stringify(payload)
+})
+  .then(res => res.json())
+  .then(console.log);
+```
+
+</RequestExample>
+
+---
+
+## Respuesta
+
+```json
+{
+  "id": 112,
+  "numeroFactura": 29,
+  "cuf": "1E46BB9FA459FFDDCBDB68D8844FB8.......",
+  "cufd": "FBQXxCU8OJSEhBFFQTgyMjdGRkY3QzluelpWWEZhVUMjI...........",
+  "fechaEmision": "2026-05-23T04:21:59.7494526",
+  "estadoSiat": "VALIDADA",
+  "nombreRazonSocial": "CLIENTE NUEVO",
+  "numeroDocumento": "99002",
+  "complemento": null,
+  "codigoCliente": "99002",
+  "montoTotal": 350.00,
+  "montoTotalSujetoIva": 350.00,
+  "leyenda": "Ley N° 453: Puedes acceder a la reclamación cuando tus derechos han sido vulnerados.",
+  "usuario": "Admin",
+  "detalles": [
+    {
+      "codigoProducto": "PROD-001",
+      "descripcion": "Suscripción Anual",
+      "cantidad": 1,
+      "precioUnitario": 350.00,
+      "subTotal": 350.00,
+      "numeroSerie": null,
+      "numeroImei": null
+    }
+  ],
+  "cafc": null
+}
+```
